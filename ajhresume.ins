@@ -1,0 +1,35 @@
+\input docstrip
+\keepsilent
+\askforoverwritefalse
+
+\preamble
+
+(refer to LICENSE file distributed with ajhresume.dtx)
+
+\endpreamble
+
+\usedir{tex/latex/ajhresume}
+\generate{\file{ajhresume.cls}{\from{ajhresume.dtx}{class}}}
+\generate{\file{example.tex}{\from{ajhresume.dtx}{example}}}
+
+%\usedir{doc/latex/ajhresume}
+%\generate{\file{README-autogen.md}{\nopreamble\nopostamble\from{ajhresume.dtx}{readme}}}
+
+\obeyspaces
+
+\Msg{*************************************************************}
+\Msg{*}
+\Msg{* To finish the installation you have to move the following}
+\Msg{* file into a directory searched by TeX:}
+\Msg{*}
+\Msg{*     \jobname.sty}
+\Msg{*}
+\Msg{* To produce the documentation run the file \jobname.dtx}
+\Msg{* through LaTeX.}
+\Msg{*}
+\Msg{* Happy TeXing!}
+\Msg{*}
+\Msg{*************************************************************}
+
+\endbatchfile
+

@@ -1,0 +1,643 @@
+% \iffalse meta-comment
+%<*internal>
+\iffalse
+%</internal>
+%<*readme-not>
+%<<EOF
+README file is here!!! TODO
+2 asdf
+% LaTeX comments can be included because of the heredoc syntax
+3 asdf
+%EOF
+%</readme-not>
+%<*internal>
+\fi
+%</internal>
+% \fi
+%
+% \iffalse
+%<*driver>
+\ProvidesFile{ajhresume.dtx}
+%</driver>
+%<class>\NeedsTeXFormat{LaTeX2e}[2005/12/01]
+%<class>\ProvidesClass{ajhresume}
+%<*class>
+  [2018/02/09 v1.0.0 Updates with xxx]
+%</class>
+%<class>
+%<class>% NOTE: All pages are odd in memoir's oneside
+%<class>\LoadClass[11pt,article,letterpaper,oneside]{memoir}
+%<class>
+%<class>\RequirePackage{longtable}           % for default sectioning commands
+%<class>\RequirePackage{tabularx}            % for default address block
+%<class>\RequirePackage{multirow}            % for default address block
+%<class>\RequirePackage{lastpage}            % for default footer
+%<class>\RequirePackage{datetime}\mdyyyydate % for default footer
+%<class>\RequirePackage{booktabs}            % pretty tables
+%<class>\RequirePackage{calc}                % life made easy
+%<class>\RequirePackage{mdwlist}             % for experience environment
+%<class>\RequirePackage{enumitem}            % for experience environment
+%<class>\RequirePackage{hyperref}            % hyperref should be last
+%<*driver>
+%<<EOF
+\documentclass{ltxdoc}
+\usepackage{xspace}   % for use in \thispkgname
+\usepackage{pdfpages}
+
+% use hack from https://tex.stackexchange.com/a/43336/5968
+\usepackage{etoolbox}
+\makeatletter
+\preto{\@verbatim}{\parskip=0bp \topsep=0pt \partopsep=0pt }
+\makeatother
+
+% link coloring to match website
+\definecolor{lcolor}{HTML}{204080}
+\usepackage[colorlinks,linkcolor=lcolor,urlcolor=lcolor]{hyperref}
+
+\usepackage{pdfpages}
+
+% two columns instead of three
+\setcounter{IndexColumns}{2}
+
+\EnableCrossrefs
+\CodelineIndex
+\begin{document}
+  \DocInput{\jobname.dtx}
+\end{document}
+%EOF
+%</driver>
+%
+% \fi
+%
+% \CheckSum{0}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+% \GetFileInfo{\jobname.dtx}
+%
+% \DoNotIndex{\\,\AtBeginDocument,\begin,\def,\end,\let,\newcommand,\newenvironment,\pageref,\renewcommand,\setlength,\sffamily,\textbf,\textsf,\textwidth,\thepage,\ttfamily,\vspace}
+% \DoNotIndex{\@ifundefined,\href,\hypersetup}
+% \DoNotIndex{\addtolength,\arraystretch,\baselineskip,\footnotesize,\hspace,\Huge,\large,\newlength,\newline,\noindent,\par,\parindent,\parskip}
+% \DoNotIndex{\aliaspagestyle,\checkandfixthelayout,\headheight,\leftskip,\makeoddfoot,\makeoddhead,\makepagestyle,\setheaderspaces,\setheadfoot,\setlrmarginsandblock,\setulmarginsandblock}
+% \DoNotIndex{\bullet,\enumerate,\itemize,\itemsep,\newlist,\setlist}
+% \DoNotIndex{\endfirsthead,\endfoot,\endhead,\endlastfoot,\hrule,\LTpre,\LTpost,\multirow,\raggedleft}
+%
+% ^^A TODO where does the hologo package get \xpackage?
+% \newcommand{\xpackage}[1]{\href{https://ctan.org/pkg/#1}{\texttt{#1}}}
+% \let\xclass\xpackage
+% \newcommand\thispkgname{\texttt{\jobname}\xspace}
+%
+% \title{The \thispkgname class}
+% \author{Alex Hirzel \texttt{<alex@hirzel.us>}}
+% \date{\filedate~\fileversion}
+% \maketitle
+%
+% \begin{abstract}
+% A judicious, hard-working resume class based on \xclass{memoir}.
+% \end{abstract}
+%
+% \tableofcontents
+%
+%
+%
+%
+%
+% \section{Introduction to \thispkgname}
+% This document class includes a pre-formatted header and a number of handy
+% environments for laying out a resume. An example is provided demonstrating the
+% most handy features of this class, and indeed starting from the example you
+% can create your own resume easily. Note that while this class is oriented
+% toward the creation of resumes, CVs are also possible.
+%
+%
+%
+% ^^A^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+% ^^A example.tex starting stuff, and examples are interleaved in here
+% ^^A^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+% \iffalse
+%<*example>
+% \fi
+%
+%
+%
+%
+%
+% \newpage
+% \section{Example resume}
+%
+% ^^A: TODO: Can't find a way to avoid injecting at least some LaTeX into
+% ^^A: example.tex when I share documentation between the class documentation
+% ^^A: and <example> output. If I don't find LaTeX handy, I should at least find
+% ^^A: it handsome, so I am using the following as "prettier" delimiters. This
+% ^^A: was based on a note at [1] that indicated \let must be used to pass thru
+% ^^A: the "conditional-ness" of \iffalse and \fi when defining "synonyms".
+% ^^A:
+% ^^A: [1]: https://tex.stackexchange.com/a/46383/5968
+% \let\FromPackageDocumentation\fi
+% \let\EndPackageDocumentation\iffalse
+%
+% This section presents the code behind resume shown below in
+% Figure~\ref{fig:example-resume}.
+%
+% \begin{figure}[h!]
+% \def\clap#1{\hbox to 0pt{\hss#1\hss}}
+% \centering
+% \setlength\fboxsep{0pt}
+% \setlength\fboxrule{0.25pt}
+% ^^A\makebox[1.5\textwidth][\c][{%
+%   \clap{
+%   \hspace{\textwidth}
+%   \fbox{\includegraphics[width=0.66\textwidth,page=1]{example.pdf}}%
+%   \fbox{\includegraphics[width=0.66\textwidth,page=2]{example.pdf}}%
+%   }
+% ^^A}
+% \caption{Output of the example contained in this section.\label{fig:example-resume}}
+% \end{figure}
+%
+% \iffalse
+%<example>
+%<<EOF
+% \FromPackageDocumentation
+% Two packages are used. The first, \xpackage{multicol}, is used to create a
+% skills column that will fit information more densely than an ordinary
+% single-column list would. The second package, \xpackage{lipsum}, allows us to
+% inject realistic test text for our letter. The |hidelinks| option is passed to
+% avoid the display of hyperlinks in PDF viewers.
+% \EndPackageDocumentation
+%EOF
+% \fi
+%
+%    \begin{verbatim}
+\documentclass[hidelinks]{ajhresume}
+\usepackage{multicol}
+\usepackage{lipsum}
+%    \end{verbatim}
+%
+% \iffalse
+% ^^A blank line in example.tex
+%<example>
+%<<EOF
+% \FromPackageDocumentation
+% There are various fields that should be defined in the preamble of a resume.
+% These will fill in the automatically-generated header on each page. Included
+% is contact information such as phone and email address, as well as a physical
+% address and website. One note on the website: if the label is not specified
+% with |\webname| (i.e. only |\weburl| provides the URL), then the the URL will
+% automatically be used as the label and formatted using |\ttfamily|.
+% \EndPackageDocumentation
+%EOF
+% \fi
+%
+% ^^A TODO implement the above-described behavior which checks for \webname
+%
+%    \begin{verbatim}
+\name{Joseph B. Lowe}
+\phone{(906) 867-5309}
+\email{joe.blow@gmail.ru}
+\address{1600 Pennsylvania Ave}{Washington, DC 20003}
+\webname{\ttfamily{}http://whitehouse.gov}
+\weburl{http://whitehouse.gov/}
+%    \end{verbatim}
+%
+% \iffalse
+% ^^A blank line in example.tex
+%<example>
+%<<EOF
+% \FromPackageDocumentation
+% Other things that can be in the preamble include an |\id| macro to place text
+% at the bottom center of each page.
+% \EndPackageDocumentation
+%EOF
+% \fi
+% This is useful for a version-controlled
+% resume; in this use case, the following call to |pdflatex| can be used to
+% define the macro from a shell: |pdflatex aldsjflskdf TODO|. Alternatively,
+% a package which provides an appropriate identifier can be used (c.f.
+% \xpackage{rcs}, \xpackage{gitinfo2}).
+%
+% \iffalse
+%<<EOF
+% \FromPackageDocumentation
+% For the purposes of this example, we will hard-code it to a test value. Just
+% note that if it is not defined, it will not appear.
+% \EndPackageDocumentation
+%EOF
+% \fi
+%
+%    \begin{verbatim}
+\def\id{(insert your SHA hash here)}
+%    \end{verbatim}
+%
+% Of course any other preamble contents can be included, but for now let's move
+% on to the meat of the resume, starting with the cover letter.
+%
+% \iffalse ^^A blank line in example.tex
+%<example>
+% \fi
+%    \begin{verbatim}
+\begin{document}
+%    \end{verbatim}
+%
+%
+%
+%
+%
+% \subsection{The cover letter}
+%
+% \iffalse
+% ^^A blank line in example.tex
+%<example>
+%<<EOF
+% \FromPackageDocumentation
+% The first part of this example is a cover letter. Big spaces (between the
+% date/address and address/body) are generated by making an empty paragraph
+% containing only a space. This is kind of hacky, but definitely works. The
+% letter can be filled out by any means desired.
+% \EndPackageDocumentation
+%EOF
+% \fi
+%
+%    \begin{verbatim}
+\newpage
+\pagestyle{letter}
+
+January 1, 1970
+
+~
+
+Michael Scott\newline
+1725 Slough Avenue\newline
+Scranton, PA 18540
+
+~
+
+Michael,
+
+\lipsum[1-4]
+
+Joseph
+%    \end{verbatim}
+%
+%
+%
+%
+%
+% \subsection{The resume}
+%
+% \iffalse ^^A blank line in example.tex
+%<example>
+%<<EOF
+% \FromPackageDocumentation
+% Now we define the resume itself. Note that this will be page two in the PDF,
+% and the page numbering will include the cover letter.
+% \EndPackageDocumentation
+%EOF
+% \fi
+%
+%    \begin{verbatim}
+\newpage
+\pagestyle{resume}
+%    \end{verbatim}
+% \iffalse ^^A blank line in example.tex
+%<example>
+% \fi
+%
+% \DescribeMacro{\head}
+% A macro |\head| is created to apply a uniform font (sans serif) to all
+% headings. Sans serif is just a recommended typographical convention that aids
+% in readability.
+%
+% \DescribeEnv{Section1}
+% There is a section type defined with only the central column populatable; this
+% is called |Section1| and an example of its usage is as follows:
+%
+%    \begin{verbatim}
+\begin{Section1}{Objective}\label{sec:objective}
+Obtain a full-time position with Dunder Mifflin verbing the noun.
+\end{Section1}
+%    \end{verbatim}
+%
+% \DescribeEnv{Section2}
+% Put description of |Section2| here.
+%
+% \DescribeEnv{Section3}
+% Put description of |Section3| here.
+%    \begin{verbatim}
+\begin{Section3}{Education}\label{sec:education}
+& \head{Professional Certificate in Underwater Basketweaving}\newline
+  Massachusetts Institute of Technology (expected: June~2018) & \\[2em]
+
+& \head{Master of Science in Mechanical~Engineering}\newline
+  Michigan Technological University (April~30,~2016)
+& GPA: 3.9/4.0 \\[2em]
+
+& \head{Bachelor of Science in Electrical~Engineering}\newline
+  \hspace*{0.488in}with a \head{Minor in Mathematics}\newline
+  Michigan Technological University (December~22,~2012)
+& GPA: 3.9/4.0 \newline \textsl{Cum Laude} \\[2em]
+
+& \head{High School Diploma}\newline
+  \href{}{L'Anse High School} (May~18,~2008)
+& GPA: 3.9/4.0 \newline \textsl{Valedictorian}
+\end{Section3}
+%    \end{verbatim}
+%
+% \StopEventually{\PrintIndex}
+%
+% ^^A^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+% ^^A example.tex end matter
+% ^^A^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+%
+% \iffalse
+%</example>
+% \fi
+% \iffalse
+%<example>\end{document}
+% ^^A blank line in example.tex
+%<example>
+% \fi
+%
+% ^^A^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+% ^^A reference
+% ^^A^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+%
+% \section{Reference}
+% \subsection{Class options supported by \thispkgname}
+% No options are parsed by \thispkgname at this time, but options are still
+% passed thru per normal. This allows for the following common options to work
+% as intended:
+%
+% \begin{description}
+% \item[|hidelinks|] removes the borders around links when detected by
+%     \xpackage{hyperref}.
+% \item[|draft|] is noticed by several packages and generally results in faster
+%     compilation:
+%   \begin{itemize}
+%     \item \xpackage{graphicx} will use blank boxes rather than including images.
+%   \end{itemize}
+% \end{description}
+%
+% TODO: showboxes colorlinks, hyperref passthru
+%
+% ^^A^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+% ^^A class code - Implementation
+% ^^A^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+%
+% \iffalse
+%<*class>
+% \fi
+%
+% \section{Implementation}
+%
+% \subsection{Page layout}
+%
+% This is the special layout sauce of \thispkgname. The page is laid out quite
+% particularly; this has definitely been fine-tuned for letter-sized paper.
+%
+%    \begin{macrocode}
+\setlrmarginsandblock{0.4in}{*}{1}
+\setulmarginsandblock{1.0in}{0.7in}{*}
+\setheadfoot{0bp}{\baselineskip}
+\setheaderspaces{0.150in}{*}{*}
+\checkandfixthelayout
+\setlength\parindent{0bp}
+\addtolength\headheight{0pt} % to get rid of "overfull vbox" warning
+%    \end{macrocode}
+%
+%
+% \subsection{Address block and friends}
+%
+% \subsubsection{Author fields}\label{sec:address-fields}
+%
+% Definitions follow for basic fields used in an address block. Specification of
+% |\webname| is optional (in which case the |\weburl| will be used). Also, the
+% |\address| is optional, and if missing will result in a slightly more compact
+% layout for page headers.
+%
+% TODO - redefine |\author| so that you can use it instead of |\name|?
+%
+%    \begin{macrocode}
+\def\@name{}    \newcommand\name[1]{\def\@name{#1}}
+\def\@email{}   \newcommand\email[1]{\def\@email{#1}}
+\def\@phone{}   \newcommand\phone[1]{\def\@phone{#1}}
+\def\@webname{} \newcommand\webname[1]{\def\@webname{#1}}
+\def\@weburl{}  \newcommand\weburl[1]{\def\@weburl{#1}}
+\def\@addressA{}
+\def\@addressB{}
+\newcommand\address[2]{\def\@addressA{#1}\def\@addressB{#2}}
+%    \end{macrocode}
+%
+% \subsubsection{Address block definition}
+%
+% The address block on each page is the ultimate consumer of the fields from
+% section \ref{sec:address-fields}. Note that the address definition macro
+% detects whether no address has been specified; if this is the case, the header
+% is modified to use a more compact layout.
+%
+%    \begin{macrocode}
+\newcommand{\emit@email}[0]{\href{mailto:\@email}{\ttfamily\@email}}
+\newcommand{\emit@phone}[0]{\href{tel:\@phone}{\@phone}}
+\newcommand{\emit@website}[0]{\href{\@weburl}{\@webname}}
+\newcommand{\address@headertext}[0]{Permanent address:}
+\newcommand{\address@header}[0]{\textsf{\footnotesize{\address@headertext}}}
+\newcommand{\address@block}[0]{
+  \renewcommand\arraystretch{1.0}
+  \@ifundefined{@addressA}{
+    \begin{tabularx}{\textwidth}{@{}X@{}r}
+      \multirow{3}{*}{\hspace{-0.15in}\vspace{0in}
+        \Huge{\sffamily\textbf{\href{\@weburl}{\@name}}}}
+      & \emit@phone \\
+      & \emit@email{} \\
+      & \emit@website{} \\
+    \end{tabularx}
+  }{
+    \begin{tabularx}{\textwidth}{@{}X@{}r|l@{}}
+      \multirow{3}{*}{\hspace{-0.15in}\vspace{0in}
+        \Huge{\sffamily\textbf{\href{\@weburl}{\@name}}}}
+      & \emit@phone     & \address@header \\
+      & \emit@email{}   & \@addressA \\
+      & \emit@website{} & \@addressB \\
+    \end{tabularx}
+  }
+}
+%    \end{macrocode}
+%
+%
+% \subsection{Other BS to separate into sections}
+%
+% Parameterize the default identifier text separate from below. To override
+% this, simply define |\id| in your document.
+%
+%    \begin{macrocode}
+\def\id@default{}
+%    \end{macrocode}
+%
+% Header and footer for the resume and cover leters. The separate page styles
+% |letter| and |resume| are defined for forward-compatibility, and their
+% separate use is encouraged (though not mandatory).
+%    \begin{macrocode}
+\makepagestyle{resume}
+\makeoddhead{resume}{}{}{\address@block}
+\makeoddfoot{resume}{}{\@ifundefined{id}{\id@default}{\id}}
+                      {Page \thepage~of~\pageref{LastPage}}
+\aliaspagestyle{letter}{resume}
+%    \end{macrocode}
+%
+% PDF properties (the title)
+%
+% TODO support link coloring
+%
+%    \begin{macrocode}
+\AtBeginDocument{
+  \hypersetup{pdfauthor={\@name}}
+  \hypersetup{pdftitle={\@name~resume}}   }
+%    \end{macrocode}
+%
+% Section layout parameters
+%    \begin{macrocode}
+\newlength\lcol@pad
+\newlength\lcol@width
+\newlength\rcol@pad
+\newlength\rcol@width
+\setlength\lcol@pad{0.65em}
+\setlength\lcol@width{1in}
+\setlength\rcol@pad{0.65em}
+\setlength\rcol@width{1.5in}
+%    \end{macrocode}
+%
+% TODO explain that the following makes letters not suck to write
+%
+%    \begin{macrocode}
+\setlength\parskip\baselineskip
+%    \end{macrocode}
+%
+% Remove spacing before and after \texttt{longtable}s (per \url{http://tex.stackexchange.com/questions/5683/how-to-remove-top-and-bottom-whitespace-of-longtable})
+%
+%    \begin{macrocode}
+\setlength{\LTpre}{0pt}
+\setlength{\LTpost}{0pt}
+%    \end{macrocode}
+%
+% List item spacing (courtesy a comment on \url{http://www.devdaily.com/blog/post/latex/control-line-spacing-in-itemize-enumerate-tags})
+%
+%    \begin{macrocode}
+\let\old@itemize=\itemize
+\def\itemize{\old@itemize\setlength{\itemsep}{-0.5ex}}
+\let\old@enumerate=\enumerate
+\def\enumerate{\old@enumerate\setlength{\itemsep}{-0.5ex}}
+%    \end{macrocode}
+%
+%
+% \begin{environment}{Section}
+% Put explanation of |Section|’s implementation here.
+%    \begin{macrocode}
+\newenvironment{Section}[1]{%
+  \setlength\parskip{0bp} % local scope
+  \noindent\begin{tabularx}{\textwidth}{@{}X@{}}
+    \large\textsf{\textbf{#1}}
+    % TODO: replace hrule with something better
+    \newline\vspace{-0.9\baselineskip}\hrule
+  \end{tabularx}
+  \par
+  % The body of the section must not be within tabularx because it
+  % will affect page breaks.
+}{%
+  \par\vspace{0.75\baselineskip}
+}
+%    \end{macrocode}
+% \end{environment}
+%
+% \begin{environment}{Section1}
+% Put explanation of |Section1|’s implementation here.
+%    \begin{macrocode}
+\newenvironment{Section1}[1]{
+  \begin{Section}{#1}
+    \addtolength{\leftskip}{\lcol@width}
+}{%
+  \end{Section}
+}
+%    \end{macrocode}
+% \end{environment}
+%
+% \begin{environment}{Section2}
+% Put explanation of |Section2|’s implementation here.
+%    \begin{macrocode}
+\newenvironment{Section2}[1]{
+  \begin{Section}{#1}
+    \renewcommand\arraystretch{1.65}
+    \begin{longtable}{
+      @{}>{\raggedleft}p{\lcol@width-\lcol@pad}
+      @{\hspace{\lcol@pad}}p{\textwidth-\lcol@width}
+    }
+    \endfirsthead
+    & (continued from previous page) \\ \\ \endhead
+    \\ & (continued on next page) \\ \endfoot
+    \endlastfoot
+}{%
+    \end{longtable}
+    \renewcommand\arraystretch{1.0}
+  \end{Section}
+}
+%    \end{macrocode}
+% \end{environment}
+%
+% \begin{environment}{Section3}
+% Put explanation of |Section3|’s implementation here.
+%    \begin{macrocode}
+\newenvironment{Section3}[1]{
+  \begin{Section}{#1}
+    \renewcommand\arraystretch{1.00}
+    \begin{longtable}{
+      @{}>{\raggedleft}p{\lcol@width-\lcol@pad}
+      @{\hspace{\lcol@pad}}p{\textwidth-\lcol@width-\rcol@width}
+      @{\hspace{\rcol@pad}}p{\rcol@width}
+    }
+    \endfirsthead
+    & (continued from previous page) \\ \\ \endhead
+    \\ & (continued on next page) \\ \endfoot
+    \endlastfoot
+}{
+    \end{longtable}
+    \renewcommand\arraystretch{1.0}
+  \end{Section}
+}
+%    \end{macrocode}
+% \end{environment}
+%
+% \begin{environment}{experience}
+% Creates a tight bullet list of experiences. Good for use within |Section1|,
+% |Section2| or |Section3|.
+%    \begin{macrocode}
+\newlist{experience}{itemize}{1}
+\setlist[experience,1]{label=$\bullet$,nosep,leftmargin=1.5em}
+%    \end{macrocode}
+% \end{environment}
+%
+% \begin{macro}{\head}
+% The |\head| macro is defined here.
+%    \begin{macrocode}
+\newcommand{\head}[1]{\textbf{\sffamily{#1}}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsection{Miscellaneous document configuration}
+%
+% \iffalse
+%</class>
+% \fi
+%
+% \Finale
