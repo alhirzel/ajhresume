@@ -56,6 +56,11 @@ $(CTANARCHIVE): $(DISTFILES)
 $(NAME).cls $(EXAMPLE).tex: $(NAME).ins $(NAME).dtx
 	pdflatex $(NAME).ins
 
+# the class documentation includes a copy of the README converted to LaTeX
+$(NAME).pdf: README.tex
+README.tex: $(README)
+	pandoc -t latex -o $@ $<
+
 # the class documentation includes the example's output, so make sure the
 # example is compiled first
 $(NAME).pdf: $(EXAMPLE).pdf
@@ -76,6 +81,7 @@ $(NAME).pdf: $(EXAMPLE).pdf
 
 clean:
 	rm -rf dist
+	rm -f README.tex
 	rm -f $(GENFILES)
 
 print-version:
