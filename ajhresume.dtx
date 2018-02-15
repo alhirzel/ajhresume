@@ -209,7 +209,7 @@ README file is here!!! TODO
 \phone{(906) 867-5309}
 \email{joe.blow@gmail.ru}
 \address{1600 Pennsylvania Ave}{Washington, DC 20003}
-\webname{\ttfamily{}http://whitehouse.gov}
+%\webname{White House website}
 \weburl{http://whitehouse.gov/}
 %    \end{macrocode}
 %
@@ -543,7 +543,7 @@ Obtain a full-time position with Dunder Mifflin verbing the noun.
 \def\@name{}    \newcommand\name[1]{\def\@name{#1}}
 \def\@email{}   \newcommand\email[1]{\def\@email{#1}}
 \def\@phone{}   \newcommand\phone[1]{\def\@phone{#1}}
-\def\@webname{} \newcommand\webname[1]{\def\@webname{#1}}
+                \newcommand\webname[1]{\def\@webname{#1}}
 \def\@weburl{}  \newcommand\weburl[1]{\def\@weburl{#1}}
 \def\@addressA{}
 \def\@addressB{}
@@ -561,7 +561,7 @@ Obtain a full-time position with Dunder Mifflin verbing the noun.
 %    \begin{macrocode}
 \newcommand{\emit@email}[0]{\href{mailto:\@email}{\ttfamily\@email}}
 \newcommand{\emit@phone}[0]{\href{tel:\@phone}{\@phone}}
-\newcommand{\emit@website}[0]{\href{\@weburl}{\@webname}}
+\newcommand{\emit@website}[0]{\href{\@weburl}{\@ifundefined{@webname}{\ttfamily{}\@weburl}{\@webname}}}
 \newcommand{\address@headertext}[0]{Permanent address:}
 \newcommand{\address@header}[0]{\textsf{\footnotesize{\address@headertext}}}
 \newcommand{\address@block}[0]{
