@@ -4,3 +4,4 @@ example.tex
 example.pdf
 README.tex
 dist
+*.swp
