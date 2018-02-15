@@ -196,8 +196,8 @@ README file is here!!! TODO
 % These will fill in the automatically-generated header on each page. Included
 % is contact information such as phone and email address, as well as a physical
 % address and website. One note on the website: if the label is not specified
-% with |\webname| (i.e. only |\weburl| provides the URL), then the the URL will
-% automatically be used as the label and formatted using |\ttfamily|.
+% with |\webname| (i.e. if only |\weburl| provides the URL), then the the URL
+% will automatically be used as the label and formatted using |\ttfamily|.
 % \EndPackageDocumentation
 %EOF
 % \fi
@@ -209,7 +209,7 @@ README file is here!!! TODO
 \phone{(906) 867-5309}
 \email{joe.blow@gmail.ru}
 \address{1600 Pennsylvania Ave}{Washington, DC 20003}
-%\webname{White House website}
+%\webname{White House website} % <-- URL will be used as the label
 \weburl{http://whitehouse.gov/}
 %    \end{macrocode}
 %
@@ -273,7 +273,6 @@ README file is here!!! TODO
 % \fi
 %
 %    \begin{macrocode}
-\newpage
 \pagestyle{letter}
 
 January 1, 1970
@@ -321,9 +320,9 @@ Joseph
 % \fi
 %
 % \DescribeMacro{\head}
-% A macro |\head| is created to apply a uniform font (sans-serif) to all
-% headings. The use of a sans-serif font is a typographical convention that
-% increases the readability and distinctness of headers.
+% A macro |\head| is created to apply a uniform font to all headings. The use of
+% a sans-serif font is a typographical convention that increases the readability
+% and distinctness of headers.
 %
 % \DescribeEnv{Section1}
 % There is a section type defined with only the central column populatable; this
@@ -338,7 +337,9 @@ Obtain a full-time position with Dunder Mifflin verbing the noun.
 % \DescribeEnv{Section2}
 % Analogus to |Section1|, another command exists which will provide a left
 % column in addition to the center column. This can be useful for indicating
-% dates or other compact, uniform information next to items.
+% dates or other compact, uniform information next to items. Note that for
+% bullet lists, you are better off using the |itemize| or |experience| items.
+% TODO link to those
 %    \begin{macrocode}
 \begin{Section2}{Education}\label{sec:education}
 2016 & \head{Master of Science in Underwater~Basketweaving}\newline
@@ -352,9 +353,13 @@ Obtain a full-time position with Dunder Mifflin verbing the noun.
 % Finally |Section3| is defined, providing access to a third column on the right
 % side. TODO linkage the column widths.
 %    \begin{macrocode}
-\begin{Section3}{Education}\label{sec:education}
-& \head{Professional Certificate in Underwater Basketweaving}\newline
-  Massachusetts Institute of Technology (expected: June~2018) & \\[2em]
+\begin{Section3}{Work Experience}\label{sec:work}
+  asdf
+& \head{Secretary of the Office of the Secretary}\newline
+  \begin{experience}
+  \item aslka lkads lfa lfkja sfd
+  \end{experience}
+& hjkl \\[2em]
 
 & \head{Master of Science in Mechanical~Engineering}\newline
   Michigan Technological University (April~30,~2016)
@@ -402,13 +407,15 @@ Obtain a full-time position with Dunder Mifflin verbing the noun.
 % \section{Implementation}
 %
 % \subsection{Class options supported by \thispkgname\label{sec:class-options}}
-% No class options are parsed by \thispkgname at this time, but class options
-% are still passed thru to packages per normal. This allows for the following
-% common class options to work as intended:
+% No class options are parsed by \thispkgname at this time, and all options are
+% passed thru to packages per normal. This allows for the following common class
+% options to work as intended:
 %
 % \begin{description}
 % \item[|hidelinks|] removes the borders around links when detected by
 %     \xpackage{hyperref}.
+% \item[|colorlinks|] is the opposite, changing the color of all clickable
+%     links.
 % \item[|draft|] is noticed by several packages and generally results in faster
 %     compilation:
 %   \begin{itemize}
@@ -416,12 +423,11 @@ Obtain a full-time position with Dunder Mifflin verbing the noun.
 %   \end{itemize}
 % \end{description}
 %
-% TODO: showboxes colorlinks, hyperref passthru
 %
 % \subsection{Page layout}
 %
-% This is the special layout sauce of \thispkgname. The page is laid out quite
-% particularly; this has definitely been fine-tuned for letter-sized paper.
+% The page layout of \thispkgname is tuned for US letter paper and consists of
+% the following \xpackage{memoir} settings.
 %
 %    \begin{macrocode}
 \setlrmarginsandblock{0.4in}{*}{1}
