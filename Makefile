@@ -59,7 +59,7 @@ $(NAME).cls $(EXAMPLE).tex: $(NAME).ins $(NAME).dtx
 # the class documentation includes a copy of the README converted to LaTeX
 $(NAME).pdf: README.tex
 README.tex: $(README)
-	pandoc -t latex -o $@ $<
+	pandoc --top-level-division=section -t latex $< | sed '/\\\(section\|hypertarget\){ajhresume}/d' > $@
 
 # the class documentation includes the example's output, so make sure the
 # example is compiled first
