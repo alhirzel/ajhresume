@@ -80,9 +80,11 @@ $(NAME).pdf: $(EXAMPLE).pdf
 	rm -f $*.xdv $*.glo
 
 clean:
-	rm -rf dist
 	rm -f README.tex
 	rm -f $(GENFILES)
+
+distclean: clean
+	rm -rf dist
 
 print-version:
 	@echo $(DTX_VERSION)
