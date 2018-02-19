@@ -73,7 +73,7 @@ README file is here!!! TODO
 %
 % \fi
 %
-% \CheckSum{314}
+% \CheckSum{311}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -422,10 +422,10 @@ Responsible for container fabrication in an underwater environment
 % \end{description}
 %
 %
-% \subsection{Page layout}
+% \subsection{Page layout and header}
 %
 % The page layout of \thispkgname is tuned for US letter paper and consists of
-% the following \xpackage{memoir} settings.
+% the following \xpackage{memoir} margin settings.
 %
 %    \begin{macrocode}
 \setlrmarginsandblock{0.4in}{*}{1}
@@ -435,6 +435,80 @@ Responsible for container fabrication in an underwater environment
 \checkandfixthelayout
 \setlength\parindent{0bp}
 \addtolength\headheight{0pt} % to get rid of "overfull vbox" warning
+%    \end{macrocode}
+%
+% The header and footer for the resume and cover leters are also defined using
+% \xpackage{memoir} features. The separate page styles |letter| and |resume| are
+% defined for forward-compatibility, and their separate use is
+% encouraged---though not mandatory---because they may be different some day.
+%
+%    \begin{macrocode}
+\makepagestyle{resume}
+\makeoddhead{resume}{}{}{\address@block}
+\makeoddfoot{resume}{}{\@ifundefined{id}{}{\id}}
+                      {Page \thepage~of~\pageref{LastPage}}
+\aliaspagestyle{letter}{resume}
+%    \end{macrocode}
+%
+%
+% \subsubsection{Author fields\label{sec:author-fields}}
+%
+% Definitions follow for basic fields used in the address block. Specification of
+% |\webname| is optional (in which case the |\weburl| will be used). Also, the
+% |\address| is optional, and if missing will result in a slightly more compact
+% layout for page headers.
+%
+% TODO - redefine |\author| so that you can use it instead of |\name|?
+%
+%    \begin{macrocode}
+\def\@name{}    \newcommand\name[1]{\def\@name{#1}}
+\def\@email{}   \newcommand\email[1]{\def\@email{#1}}
+\def\@phone{}   \newcommand\phone[1]{\def\@phone{#1}}
+                \newcommand\webname[1]{\def\@webname{#1}}
+\def\@weburl{}  \newcommand\weburl[1]{\def\@weburl{#1}}
+\def\@addressA{}
+\def\@addressB{}
+\newcommand\address[2]{\def\@addressA{#1}\def\@addressB{#2}}
+%    \end{macrocode}
+%
+%
+% \subsubsection{Address block definition\label{sec:address-block}}
+%
+% The address block on each page is the ultimate consumer of the fields from
+% \autoref{sec:author-fields}. Note that the address definition macro
+% allows us to conclude whether no address has been specified (by checking for
+% undefinedness of |\@addressA|); if this is the case, the header is modified to
+% use a more compact layout.
+%
+%    \begin{macrocode}
+\newcommand{\emit@email}[0]{\href{mailto:\@email}{\ttfamily\@email}}
+\newcommand{\emit@phone}[0]{\href{tel:\@phone}{\@phone}}
+\newcommand{\emit@website}[0]{\href{\@weburl}{%
+	\@ifundefined{@webname}{\ttfamily{}\@weburl}{\@webname}}}
+\newcommand{\address@headertext}[0]{%
+	Permanent address:}
+\newcommand{\address@header}[0]{%
+	\textsf{\footnotesize{\address@headertext}}}
+\newcommand{\address@block}[0]{
+  \renewcommand\arraystretch{1.0}
+  \@ifundefined{@addressA}{
+    \begin{tabularx}{\textwidth}{@{}X@{}r}
+      \multirow{3}{*}{\hspace{-0.15in}\vspace{0in}
+        \Huge{\sffamily\textbf{\href{\@weburl}{\@name}}}}
+      & \emit@phone \\
+      & \emit@email{} \\
+      & \emit@website{} \\
+    \end{tabularx}
+  }{
+    \begin{tabularx}{\textwidth}{@{}X@{}r|l@{}}
+      \multirow{3}{*}{\hspace{-0.15in}\vspace{0in}
+        \Huge{\sffamily\textbf{\href{\@weburl}{\@name}}}}
+      & \emit@phone     & \address@header \\
+      & \emit@email{}   & \@addressA \\
+      & \emit@website{} & \@addressB \\
+    \end{tabularx}
+  }
+}
 %    \end{macrocode}
 %
 %
@@ -536,94 +610,11 @@ Responsible for container fabrication in an underwater environment
 % \end{environment}
 %
 %
-% \subsection{Address block and friends}
-%
-% \subsubsection{Author fields}\label{sec:author-fields}
-%
-% Definitions follow for basic fields used in an address block. Specification of
-% |\webname| is optional (in which case the |\weburl| will be used). Also, the
-% |\address| is optional, and if missing will result in a slightly more compact
-% layout for page headers.
-%
-% TODO - redefine |\author| so that you can use it instead of |\name|?
-%
-%    \begin{macrocode}
-\def\@name{}    \newcommand\name[1]{\def\@name{#1}}
-\def\@email{}   \newcommand\email[1]{\def\@email{#1}}
-\def\@phone{}   \newcommand\phone[1]{\def\@phone{#1}}
-                \newcommand\webname[1]{\def\@webname{#1}}
-\def\@weburl{}  \newcommand\weburl[1]{\def\@weburl{#1}}
-\def\@addressA{}
-\def\@addressB{}
-\newcommand\address[2]{\def\@addressA{#1}\def\@addressB{#2}}
-%    \end{macrocode}
-%
-% \subsubsection{Address block definition}
-%
-% The address block on each page is the ultimate consumer of the fields from
-% \autoref{sec:author-fields}. Note that the address definition macro
-% allows us to conclude whether no address has been specified (by checking for
-% undefinedness of |\@addressA|); if this is the case, the header is modified to
-% use a more compact layout.
-%
-%    \begin{macrocode}
-\newcommand{\emit@email}[0]{\href{mailto:\@email}{\ttfamily\@email}}
-\newcommand{\emit@phone}[0]{\href{tel:\@phone}{\@phone}}
-\newcommand{\emit@website}[0]{\href{\@weburl}{\@ifundefined{@webname}{\ttfamily{}\@weburl}{\@webname}}}
-\newcommand{\address@headertext}[0]{Permanent address:}
-\newcommand{\address@header}[0]{\textsf{\footnotesize{\address@headertext}}}
-\newcommand{\address@block}[0]{
-  \renewcommand\arraystretch{1.0}
-  \@ifundefined{@addressA}{
-    \begin{tabularx}{\textwidth}{@{}X@{}r}
-      \multirow{3}{*}{\hspace{-0.15in}\vspace{0in}
-        \Huge{\sffamily\textbf{\href{\@weburl}{\@name}}}}
-      & \emit@phone \\
-      & \emit@email{} \\
-      & \emit@website{} \\
-    \end{tabularx}
-  }{
-    \begin{tabularx}{\textwidth}{@{}X@{}r|l@{}}
-      \multirow{3}{*}{\hspace{-0.15in}\vspace{0in}
-        \Huge{\sffamily\textbf{\href{\@weburl}{\@name}}}}
-      & \emit@phone     & \address@header \\
-      & \emit@email{}   & \@addressA \\
-      & \emit@website{} & \@addressB \\
-    \end{tabularx}
-  }
-}
-%    \end{macrocode}
-%
-%
 % \subsection{Other BS to separate into sections}
-%
-% Parameterize the default identifier text separate from below. To override
-% this, simply define |\id| in your document.
-%
-%    \begin{macrocode}
-\def\id@default{}
-%    \end{macrocode}
-%
-% Header and footer for the resume and cover leters. The separate page styles
-% |letter| and |resume| are defined for forward-compatibility, and their
-% separate use is encouraged (though not mandatory).
-%    \begin{macrocode}
-\makepagestyle{resume}
-\makeoddhead{resume}{}{}{\address@block}
-\makeoddfoot{resume}{}{\@ifundefined{id}{\id@default}{\id}}
-                      {Page \thepage~of~\pageref{LastPage}}
-\aliaspagestyle{letter}{resume}
-%    \end{macrocode}
 %
 % PDF properties (the title)
 %
 % TODO support link coloring
-%
-%    \begin{macrocode}
-\AtBeginDocument{
-  \hypersetup{pdfauthor={\@name}}
-  \hypersetup{pdftitle={\@name~resume}}   }
-%    \end{macrocode}
 %
 %
 % TODO explain that the following makes letters not suck to write
@@ -632,14 +623,16 @@ Responsible for container fabrication in an underwater environment
 \setlength\parskip\baselineskip
 %    \end{macrocode}
 %
-% Remove spacing before and after \texttt{longtable}s (per \url{http://tex.stackexchange.com/questions/5683/how-to-remove-top-and-bottom-whitespace-of-longtable})
+% Remove spacing before and after \texttt{longtable}s (per
+% \url{http://tex.stackexchange.com/questions/5683/how-to-remove-top-and-bottom-whitespace-of-longtable})
 %
 %    \begin{macrocode}
 \setlength{\LTpre}{0pt}
 \setlength{\LTpost}{0pt}
 %    \end{macrocode}
 %
-% List item spacing (courtesy a comment on \url{http://www.devdaily.com/blog/post/latex/control-line-spacing-in-itemize-enumerate-tags})
+% List item spacing (courtesy a comment on
+% \url{http://www.devdaily.com/blog/post/latex/control-line-spacing-in-itemize-enumerate-tags})
 %
 %    \begin{macrocode}
 \let\old@itemize=\itemize
@@ -667,6 +660,20 @@ Responsible for container fabrication in an underwater environment
 % \end{macro}
 %
 % \subsection{Miscellaneous document configuration}
+%
+% The following commands populate PDF fields.
+%
+%    \begin{macrocode}
+\AtBeginDocument{
+  \hypersetup{pdfauthor={\@name}}
+  \hypersetup{pdftitle={\@name~resume}}   }
+%    \end{macrocode}
+%
+% And the following commands are used to support reproducible builds (note that
+% the |TODO| environment variable needs to be supplied in your environment for
+% this to work).
+%
+% (TODO attempt reproducible builds stuff here)
 %
 % \appendix
 %
