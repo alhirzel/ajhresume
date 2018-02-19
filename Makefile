@@ -14,12 +14,12 @@ VALIDATE=./validate_ctan.pl
 GENFILES=$(NAME).cls $(NAME).pdf $(EXAMPLE).tex $(EXAMPLE).pdf
 DISTFILES=$(README) $(LICENSE) $(NAME).dtx $(NAME).ins $(GENFILES)
 DTX_VERSION=$(shell ltxfileinfo -v $(NAME).dtx)
+GIT_TAG=$(shell git name-rev --tags --name-only $(shell git rev-parse HEAD))
 CTANARCHIVE=$(NAME)-$(DTX_VERSION).tar.gz
 
 dist: dist/ctan
 
 # get version string from git for a sanity check here
-dist/ctan: GIT_TAG=$(shell git name-rev --tags --name-only $(shell git rev-parse HEAD))
 dist/ctan: $(CTANARCHIVE)
 	mkdir -p $@
 	@echo ""
