@@ -2,6 +2,12 @@
 
 A judicious, hard-working resume document class based on `memoir`.
 
+This document class includes a pre-formatted header and a number of handy
+environments for laying out a resume. An example is provided demonstrating the
+most useful features of this class. Starting from the example you can create
+your own resume easily. Note that while this class is oriented toward the
+creation of resumes, CVs are also possible.
+
 
 ## Installation
 

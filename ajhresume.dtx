@@ -59,6 +59,10 @@ README file is here!!! TODO
 % two columns instead of three
 \setcounter{IndexColumns}{2}
 
+% formatting for the documentation
+%\setlength\parskip{0.33\baselineskip}
+%\setlength\parindent{0bp}
+
 \EnableCrossrefs
 \CodelineIndex
 \begin{document}
@@ -118,6 +122,8 @@ README file is here!!! TODO
 %
 %
 %
+% \newpage
+%
 % \section{Introduction to \thispkgname}
 % This document class includes a pre-formatted header and a number of handy
 % environments for laying out a resume. An example is provided demonstrating the
@@ -136,7 +142,6 @@ README file is here!!! TODO
 % \fi
 %
 %
-% \newpage
 % \section{Example resume: Joseph B. Lowe}
 %
 % ^^A: TODO: Can't find a way to avoid injecting at least some LaTeX into
@@ -401,7 +406,7 @@ Responsible for container fabrication in an underwater environment
 %
 % \section{Implementation}
 %
-% \subsection{Class options supported by \thispkgname\label{sec:class-options}}
+% \subsection{Class options\label{sec:class-options}}
 % No class options are parsed by \thispkgname at this time, and all options are
 % passed thru to packages per normal. This allows for the following common class
 % options to work as intended:
@@ -412,10 +417,8 @@ Responsible for container fabrication in an underwater environment
 % \item[|colorlinks|] is the opposite, changing the color of all clickable
 %     links.
 % \item[|draft|] is noticed by several packages and generally results in faster
-%     compilation:
-%   \begin{itemize}
-%     \item \xpackage{graphicx} will use blank boxes rather than including images.
-%   \end{itemize}
+%     compilation (e.g. \xpackage{graphicx} will use blank boxes rather than
+%     including images).
 % \end{description}
 %
 %
@@ -448,11 +451,15 @@ Responsible for container fabrication in an underwater environment
 \newlength\rcol@width  \setlength\rcol@width{1.5in}
 %    \end{macrocode}
 %
+% Currently, the only way to change these lengths is to manually override them
+% between |\makeatletter| and |\makeatother| commands.
+%
 % \begin{environment}{Section}
-% |Section| is the basic configuration of \xpackage{longtable} which allows us
-% to achieve the desired document layout. It also typesets the header lines seen
-% in the example. Class users should not directly use |Section| but rather one
-% of the environments |Section1|, |Section2| or |Section3| below.
+% The basic configuration of \xpackage{longtable} takes place within the
+% |Section| environment, which allows us to achieve the desired document layout.
+% It also typesets the header lines seen in the example. Class users should not
+% directly use |Section| but rather one of the environments |Section1|,
+% |Section2| or |Section3| below.
 %    \begin{macrocode}
 \newenvironment{Section}[1]{%
   \setlength\parskip{0bp} % local scope
@@ -471,8 +478,8 @@ Responsible for container fabrication in an underwater environment
 % \end{environment}
 %
 % \begin{environment}{Section1}
-% The basic section will put text on only the "middle" column, and respects the
-% width settings in SECTION XXX TODO.
+% This basic section command will put text on only the "middle" (widest) column,
+% and respects the width settings above.
 %    \begin{macrocode}
 \newenvironment{Section1}[1]{
   \begin{Section}{#1}
