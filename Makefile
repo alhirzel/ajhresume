@@ -17,6 +17,8 @@ DTX_VERSION=$(shell ltxfileinfo -v $(NAME).dtx)
 GIT_TAG=$(shell git name-rev --tags --name-only $(shell git rev-parse HEAD))
 CTANARCHIVE=$(NAME)-$(DTX_VERSION).tar.gz
 
+DEFAULT: $(GENFILES)
+
 dist: dist/ctan
 
 # get version string from git for a sanity check here
@@ -94,5 +96,5 @@ distclean: clean
 print-version:
 	@echo $(DTX_VERSION)
 
-.PHONY: clean print-version
+.PHONY: clean print-version DEFAULT
 
