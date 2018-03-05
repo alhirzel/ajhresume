@@ -73,7 +73,7 @@ README file is here!!! TODO
 %
 % \fi
 %
-% \CheckSum{311}
+% \CheckSum{319}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -468,7 +468,8 @@ Responsible for container fabrication in an underwater environment
 \def\@weburl{}  \newcommand\weburl[1]{\def\@weburl{#1}}
 \def\@addressA{}
 \def\@addressB{}
-\newcommand\address[2]{\def\@addressA{#1}\def\@addressB{#2}}
+\newcommand\address[2]{\def\@addressA{#1}\def\@addressB{#2}%
+\def\@addressURL{https://maps.google.com/?q=#1 #2}}
 %    \end{macrocode}
 %
 %
@@ -503,9 +504,9 @@ Responsible for container fabrication in an underwater environment
     \begin{tabularx}{\textwidth}{@{}X@{}r|l@{}}
       \multirow{3}{*}{\hspace{-0.15in}\vspace{0in}
         \Huge{\sffamily\textbf{\href{\@weburl}{\@name}}}}
-      & \emit@phone     & \address@header \\
-      & \emit@email{}   & \@addressA \\
-      & \emit@website{} & \@addressB \\
+      & \emit@phone     & \href{\@addressURL}{\address@header} \\
+      & \emit@email{}   & \href{\@addressURL}{\@addressA} \\
+      & \emit@website{} & \href{\@addressURL}{\@addressB} \\
     \end{tabularx}
   }
 }
