@@ -40,6 +40,11 @@ ifeq "$(shell grep CheckSum{0} $(NAME).dtx | wc -l)" "0"
 else
 	@echo FAIL: file checksum is zero, update it to a valid value before release
 endif
+ifeq "$(git diff-index HEAD | wc -l)" "0"
+	@echo PASS: working directory clean
+else
+	@echo FAIL: working directory dirty
+endif
 	mv $(CTANARCHIVE) $@
 
 	@# copy files into dist folder after archive
