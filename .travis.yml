@@ -1,5 +1,20 @@
+language: r
+pandoc_version: 2.1.2
 group: travis_latest
-script:
+
+addons:
+  apt:
+    packages:
+      - texlive-fonts-recommended
+      - texlive-extra-utils
+      - texlive-latex-extra
+      - texlive-fonts-extra
+      - texlive-latex-recommended
+
+before_install:
 - sudo apt-get update
-- sudo apt-get install --no-install-recommends texlive-fonts-recommended texlive-extra-utils texlive-latex-extra texlive-fonts-extra texlive-latex-recommended pandoc
+- tlmgr install texfot
+
+script:
 - make dist
+
