@@ -28,22 +28,22 @@ dist/ctan: $(CTANARCHIVE)
 	@echo Note: target directory on CTAN is macros/latex/contrib/$(NAME)
 	@echo Note: other CTAN information is available in the $(README)
 	@echo ""
-	@echo performing release sanity checks \(DO NOT RELEASE IF THERE ARE FAILURES\):
 	$(VALIDATE) $(CTANARCHIVE) "$(DTX_VERSION)"
+	@echo performing release sanity checks \(DO NOT RELEASE IF THERE ARE FAILURES\):
 ifeq "$(GIT_TAG)" "$(DTX_VERSION)"
 	@echo PASS: .dtx version file matches git tag [dtx="$(DTX_VERSION)", git="$(GIT_TAG)"]
 else
 	@echo FAIL: .dtx version does not match git tag [dtx="$(DTX_VERSION)", git="$(GIT_TAG)"]
 endif
-ifeq "$(shell grep CheckSum{0} $(NAME).dtx | wc -l)" "0"
+ifeq "0" "$(shell grep CheckSum{0} $(NAME).dtx | wc -l)"
 	@echo PASS: file appears to have valid checksum
 else
 	@echo FAIL: file checksum is zero, update it to a valid value before release
 endif
-ifeq "$(git diff-index HEAD | wc -l)" "0"
+ifeq "0" "$(shell git diff-index HEAD | wc -l)"
 	@echo PASS: working directory clean
 else
-	@echo FAIL: working directory dirty
+	@echo FAIL: working directory dirty \($(shell git diff-index HEAD | wc -l)\)
 endif
 	mv $(CTANARCHIVE) $@
 
