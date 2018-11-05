@@ -2,7 +2,7 @@
 # Makefile for the ajhresume package. Creates the tgz to upload to CTAN
 # Alex Hirzel <alex@hirzel.us>
 
-NAME=ajhresume
+CLASS=ajhresume
 EXAMPLE=example
 README=README.md
 LICENSE=LICENSE
@@ -11,11 +11,11 @@ LATEX=texfot -ignore '^This is \\w*TeX|^Output written on ' -no-stderr latexmk -
 LATEX_CLEAN=latexmk -c
 VALIDATE=./validate_ctan.pl
 
-GENFILES=$(NAME).cls $(NAME).pdf $(EXAMPLE).tex $(EXAMPLE).pdf
-DISTFILES=$(README) $(LICENSE) $(NAME).dtx $(NAME).ins $(GENFILES)
-DTX_VERSION=$(shell ltxfileinfo -v $(NAME).dtx)
+GENFILES=$(CLASS).cls $(CLASS).pdf $(EXAMPLE).tex $(EXAMPLE).pdf
+DISTFILES=$(README) $(LICENSE) $(CLASS).dtx $(CLASS).ins $(GENFILES)
+DTX_VERSION=$(shell ltxfileinfo -v $(CLASS).dtx)
 GIT_TAG=$(shell git name-rev --tags --name-only $(shell git rev-parse HEAD))
-CTANARCHIVE=$(NAME)-$(DTX_VERSION).tar.gz
+CTANARCHIVE=$(CLASS)-$(DTX_VERSION).tar.gz
 
 DEFAULT: $(GENFILES)
 
@@ -27,7 +27,7 @@ dist/ctan: $(CTANARCHIVE)
 	@echo ""
 	@echo Release process for CTAN
 	@echo ========================
-	@echo Note: target directory on CTAN is macros/latex/contrib/$(NAME)
+	@echo Note: target directory on CTAN is macros/latex/contrib/$(CLASS)
 	@echo Note: other CTAN information is available in the $(README)
 	@echo ""
 	$(VALIDATE) $(CTANARCHIVE) "$(DTX_VERSION)"
@@ -37,7 +37,7 @@ ifeq "$(GIT_TAG)" "$(DTX_VERSION)"
 else
 	@echo FAIL: .dtx version does not match git tag [dtx="$(DTX_VERSION)", git="$(GIT_TAG)"]
 endif
-ifeq "0" "$(shell grep CheckSum{0} $(NAME).dtx | wc -l)"
+ifeq "0" "$(shell grep CheckSum{0} $(CLASS).dtx | wc -l)"
 	@echo PASS: file appears to have valid checksum
 else
 	@echo FAIL: file checksum is zero, update it to a valid value before release
@@ -57,20 +57,20 @@ endif
 # Note: the archive should have a single level of indirection inside (e.g. the
 #       README.md file should be ajhresume/README.md within the archive)
 $(CTANARCHIVE): $(DISTFILES)
-	tar -zcf $@ --show-transformed-names --verbose --xform 's,^,$(NAME)/,' $^
+	tar -zcf $@ --show-transformed-names --verbose --xform 's,^,$(CLASS)/,' $^
 
 # unpack the .dtx
-$(NAME).cls $(EXAMPLE).tex: $(NAME).ins $(NAME).dtx
-	pdflatex $(NAME).ins
+$(CLASS).cls $(EXAMPLE).tex: $(CLASS).ins $(CLASS).dtx
+	pdflatex $(CLASS).ins
 
 # the class documentation includes a copy of the README converted to LaTeX
-$(NAME).pdf: README.tex
+$(CLASS).pdf: README.tex
 README.tex: $(README)
 	pandoc --top-level-division=section -t latex $< | sed '/\\\(section\|hypertarget\){ajhresume}/d' > $@
 
 # the class documentation includes the example's output, so make sure the
 # example is compiled first
-$(NAME).pdf: $(EXAMPLE).pdf
+$(CLASS).pdf: $(EXAMPLE).pdf
 
 # PDFs made from .dtx have a special index
 %.pdf: %.dtx
